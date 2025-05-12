@@ -1,98 +1,81 @@
-import React from 'react'
+import React, { useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom'
+import './Header.css'; // pour les styles personnalisés
 
 const Header = () => {
+   const location = useLocation()
+  const isActive = (path) => location.pathname === path
+  useEffect(() => {
+    const dropdowns = document.querySelectorAll('.dropdown-submenu > a');
+
+    dropdowns.forEach((dropdown) => {
+      dropdown.addEventListener('click', function (e) {
+        const nextMenu = this.nextElementSibling;
+        if (nextMenu && nextMenu.classList.contains('dropdown-menu')) {
+          e.preventDefault();
+          nextMenu.classList.toggle('show');
+        }
+      });
+    });
+  }, []);
+
   return (
-    <header>
-	<div className="bg_left"></div>
-    <div className="container">
-    	<div className="row">
-			
-        	<div className="span3">
-            	<div className="clearfix">
-									<div className="clearfix header-block-pad">
-										 <a href="index.html"><img src="images/logo.jpg" alt=""/></a>					
-									</div>
-							</div>
-					</div>
-					
-					
+	<header>
+	<div className="container">
+		<div className="row">
 
+			<nav className="navbar navbar-expand-lg navbar-light bg-info " >
+				<div className="container-fluid">
+					<Link className="navbar-brand" to="/"><img src="images/big_logo.gif" alt=""/></Link>
+					<button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDropdown" aria-controls="navbarDropdown" aria-expanded="false" aria-label="Toggle navigation">
+					<span className="navbar-toggler-icon"></span>
+					</button>
 
-			    <div className="span9" id="nav_section">
-			      <div className="navbar navbar_ clearfix">
-			        <div className="navbar-inner navbar-inner_">
-			            <a className="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse_">MENU</a>                                                   
-			            <div className="nav-collapse nav-collapse_ collapse">
-			                <ul className="nav sf-menu">
-			                  <li className="active">
-													<a href="index.html">
-														Home Page
-														<span>start here</span>
-													</a>
-												</li>
-												<li className="sub-menu">
-													<a href="index-1.html">
-														About us
-														<span>who we are</span>
-													</a>
-														<ul>
-															<li>
-															  <a href="index-1.html">
-																	About
-																</a>
-															</li>
-															<li className="sub-menu-2">
-															  <a href="index-1.html">
-																	History
-																</a>
-																	<ul>
-																		<li><a href="404.html">404 page not found</a></li>
-																	</ul>
-															</li>
-															<li>
-															  <a href="index-1.html">
-																	Mission
-																</a>
-															</li>
-															<li>
-															  <a href="index-1.html">
-																	Sponsors
-																</a>
-															</li>
-														</ul>
-													
-												</li>
-												<li>
-													<a href="index-2.html">
-														donations
-														<span>help now</span>
-													</a>
-												</li>
-												<li>
-													<a href="index-3.html">
-														programs
-														<span>what we do</span>
-													</a>
-												</li>
-												<li>
-													<a href="index-4.html">
-														contacts
-														<span>mail us</span>
-													</a>
-												</li>
-												
-			                </ul>
-			            </div>
-			        </div>
-			      </div>
-			    </div>
-					
+					<div className="collapse navbar-collapse" id="navbarDropdown">
+						<div cclassNamelass="navbar navbar_ clearfix">
+			        	<div className="navbar-inner navbar-inner_"></div>
+							<ul className="navbar-nav me-auto mb-2 mb-lg-0 nav sf-menu">
 
-      </div>   
-    </div>
+								<li className="nav-item">
+									<Link className="nav-link" to="/">Home</Link>
+								</li>
 
-</header>
-  )
-}
+								{/* First Level Dropdown */}
+								<li className="nav-item dropdown sub-menu">
+								<a className="nav-link dropdown-toggle" href="/" id="level1Dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									About Us
+								</a>
+								<ul className="dropdown-menu" aria-labelledby="level1Dropdown">
 
-export default Header
+									<li><Link className="dropdown-item" to="/mission">Mission</Link></li>
+
+									{/* Second Level Dropdown */}
+									<li  className={`dropdown-submenu ${isActive('/history') ? 'active' : ''}`}>
+									<a className="dropdown-item dropdown-toggle" href="/history">History</a>
+									<ul className="dropdown-menu">
+										<li className={isActive('/contact') ? 'active' : ''}><Link className="dropdown-item" to="/contact">Contact</Link></li>
+
+										
+									</ul>
+									</li>
+
+								</ul>
+								</li>
+
+								<li className="nav-item">
+								<Link className="nav-link" to="/contact">Contact</Link>
+								</li>
+
+							</ul>
+						</div>
+						</div>
+				</div>
+			</nav>
+		
+		</div>
+	</div>
+	</header>
+  );
+};
+
+export default Header;

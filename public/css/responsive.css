@@ -8,6 +8,31 @@
  * Designed and built with all the love in the world @twitter by @mdo and @fat.
  */
 
+ /* Pour sous-dropdown */
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu > .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -1px;
+  display: none;
+}
+
+/* Desktop: afficher sur hover */
+@media (min-width: 992px) {
+  .dropdown-submenu:hover > .dropdown-menu {
+    display: block;
+  }
+}
+
+/* Mobile: toggle show class */
+.dropdown-menu.show {
+  display: block;
+}
+
+
 .hidden {
   display: none;
   visibility: hidden;
